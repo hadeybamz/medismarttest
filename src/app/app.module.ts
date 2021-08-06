@@ -5,41 +5,40 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { RouterModule, Routes } from '@angular/router';
-import { CardComponent } from './card/card.component';
-import { TableComponent } from './table/table.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 
-const routes: Routes = [];
+import { RouterModule, Routes } from '@angular/router';
+import { ContactComponent } from './components/contact/contact.component';
+import { SharedModule } from './shared/shared.module';
+import { ContactFormComponent } from './components/contact/contact-form/contact-form.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+
+const routes: Routes = [
+  {
+    path: '**',
+    redirectTo: 'contact',
+  },
+  { path: 'contact', component: ContactComponent },
+];
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, CardComponent, TableComponent],
+  declarations: [AppComponent, NavComponent, ContactComponent, ContactFormComponent],
   imports: [
     RouterModule.forRoot(routes),
+    SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,
-    MatToolbarModule,
+    MatInputModule,
     MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatGridListModule,
+    MatSelectModule,
+    MatRadioModule,
     MatCardModule,
-    MatMenuModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
