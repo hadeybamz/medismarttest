@@ -1,4 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ContactFormComponent } from './contact-form/contact-form.component';
+
+export interface IContactInfo {
+  FirstName: string;
+  LastName: string;
+  OtherName: string;
+  DateOfBirth: string;
+  Gender: string;
+  PhoneNo: string;
+  Occupation: string;
+  Address: string;
+  Nationality: string;
+  CountryOfResidence: string;
+}
 
 @Component({
   selector: 'app-contact',
@@ -6,15 +21,36 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent implements OnInit {
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
-  addData() {
-    console.log('add data');
+  openDialog(data: IContactInfo): void {
+    const dialogRef = this.dialog.open(ContactFormComponent, {
+      // width: '250px',
+      data,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
+      // this.animal = result;
+    });
   }
 
-  refresh() {
+  onAddButtonClick() {
+    this.openDialog(null);
+  }
+
+  onEditIconClick(data: IContactInfo) {
+    this.openDialog(data);
+  }
+
+  onDeleteIconClick(id: number) {
+    // this.openDialog(null);
+    console.log('delete item with id: ', id);
+  }
+
+  onRefreshButtonClick() {
     console.log('referesh');
   }
 }

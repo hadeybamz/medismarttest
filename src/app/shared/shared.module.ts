@@ -16,6 +16,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [CardComponent, TableComponent],
@@ -35,6 +38,10 @@ import { MatInputModule } from '@angular/material/input';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    // MatMomentDateModule
   ],
   exports: [
     CardComponent,
@@ -51,6 +58,10 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    // MatMomentDateModule,
   ],
 })
 export class SharedModule {}
