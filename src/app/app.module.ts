@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -16,6 +16,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AppConfigService } from './shared/services/app-config.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './shared/services/interceptor.service';
+import { environment } from 'src/environments/environment';
+
+export function initializeAppConfig(appConfigService: AppConfigService) {
+  return () => appConfigService.load();
+}
 
 const routes: Routes = [
   {
@@ -26,12 +34,18 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, ContactComponent, ContactFormComponent],
+  declarations: [
+    AppComponent,
+    NavComponent,
+    ContactComponent,
+    ContactFormComponent,
+  ],
   imports: [
     RouterModule.forRoot(routes),
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     LayoutModule,
     MatInputModule,
     MatButtonModule,
@@ -40,7 +54,16 @@ const routes: Routes = [
     MatCardModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAppConfig,
+      deps: [AppConfigService],
+      multi: true,
+    },
+    { provide: 'partialDocumentTitle', useValue: ` | ${environment.appName}` },
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,0 +1,18 @@
+{
+  "env": {
+    "name": "DEV"
+  },
+
+  "data": {
+    "api": "assets"
+  },
+
+  "appInsights": {
+    "instrumentationKey": ""
+  },
+
+  "logging": {
+    "console": true,
+    "appInsights": false
+  }
+}
