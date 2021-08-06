@@ -27,7 +27,11 @@
       </button>
       <span>medismarttest</span>
     </mat-toolbar>
-    <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar
+      *ngIf="loaderService.processing$ | async"
+      color="accent"
+      mode="indeterminate"
+    ></mat-progress-bar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
