@@ -11,4 +11,20 @@
   .btn + .btn {
     margin-left: 8px;
   }
+
+  .full-width-table {
+    width: 100%;
+  }
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .no-data {
+    text-align: center;
+  }
+
+  .action-icon {
+    cursor: pointer;
+  }
 }

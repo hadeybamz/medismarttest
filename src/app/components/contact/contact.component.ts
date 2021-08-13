@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable, of } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { ConfirmActionComponent } from 'src/app/shared/components/confirm-action/confirm-action.component';
+import { ContactApiService } from 'src/app/shared/services/contact-api.service';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 
 export interface IContactInfo {
@@ -19,16 +26,57 @@ export interface IContactInfo {
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
+  providers: [ContactApiService],
 })
 export class ContactComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+  contacts$: Observable<IContactInfo[]>;
+  displayedColumns: string[] = [
+    'Id',
+    'FirstName',
+    'LastName',
+    'DateOfBirth',
+    'PhoneNo',
+    'Occupation',
+    'Actions',
+  ];
 
-  ngOnInit(): void {}
+  dataSource: MatTableDataSource<IContactInfo>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(public dialog: MatDialog, public apiService: ContactApiService) {}
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
+    this.apiService
+      .getAll()
+      .pipe(take(1))
+      .subscribe((v) => {
+        this.dataSource = new MatTableDataSource(v);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+  }
 
   openDialog(data: IContactInfo): void {
     const dialogRef = this.dialog.open(ContactFormComponent, {
-      // width: '250px',
       data,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.saveSuccess) {
+        this.loadData();
+      }
+    });
+  }
+
+  openConfirmDialog(description: string, actionText: string): void {
+    const dialogRef = this.dialog.open(ConfirmActionComponent, {
+      data: { description, actionText },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -45,12 +93,42 @@ export class ContactComponent implements OnInit {
     this.openDialog(data);
   }
 
+  onViewIconClick(data: IContactInfo) {
+    console.log(data);
+  }
+
   onDeleteIconClick(id: number) {
-    // this.openDialog(null);
-    console.log('delete item with id: ', id);
+    const dialogRef = this.dialog.open(ConfirmActionComponent, {
+      data: {
+        description: 'Are you sure you want to delete this item?',
+        actionText: 'Delete',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.confirmed) {
+        this.apiService
+          .deleteContact(id)
+          .pipe(take(1))
+          .subscribe((res) => {
+            if (res) {
+              console.log('delete item with id: ', id);
+            }
+          });
+      }
+    });
   }
 
   onRefreshButtonClick() {
-    console.log('referesh');
+    this.loadData();
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

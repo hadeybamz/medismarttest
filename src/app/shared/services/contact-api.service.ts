@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 
 import { Observable } from 'rxjs/internal/Observable';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { IContactInfo } from 'src/app/components/contact/contact.component';
 import { IApiResult } from 'src/app/interfaces/api-result.interface';
 import { ApiService } from './api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class ContactApiService {
@@ -13,73 +14,91 @@ export class ContactApiService {
   config = null;
   apiBaseURL: string | undefined;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private _snackBar: MatSnackBar) {}
 
   getAll(): Observable<any[]> {
-    return this.apiService.read('registration/get').pipe(
+    return this.apiService.read('/contacts/getAll').pipe(
       switchMap((res: IApiResult) => {
         if (res.Success && res.Results) {
-          console.log(res.Results);
+          this.openSnackBar('records loaded successfully');
           return of(res.Results);
         } else {
-          of([]);
+          this.openSnackBar(
+            res.ErrorMessage ? res.ErrorMessage : 'Data could not be loaded.'
+          );
+          return of([]);
         }
       }),
       catchError((error: any) => {
-        console.log(error);
+        this.openSnackBar('Something went wrong, data could not be loaded.');
         return of([]);
       })
     );
   }
 
   createContact(data: IContactInfo): Observable<boolean> {
-    return this.apiService.create('registration/create', data).pipe(
+    return this.apiService.create('/contacts/create', data).pipe(
       switchMap((res: IApiResult) => {
         if (res.Success) {
-          console.log(res.Results);
+          this.openSnackBar('Record created successfully');
           return of(res.Success);
         } else {
+          this.openSnackBar(
+            res.ErrorMessage ? res.ErrorMessage : 'Record could not be created'
+          );
           of(res.Success);
         }
       }),
       catchError((error: any) => {
-        console.log(error);
+        this.openSnackBar('Something went wrong, record could not be created.');
         return of(false);
       })
     );
   }
 
   updateContact(data: IContactInfo, id: number): Observable<boolean> {
-    return this.apiService.update(`registration/update/${id}`, data).pipe(
+    return this.apiService.update(`registrations/update/${id}`, data).pipe(
       switchMap((res: IApiResult) => {
         if (res.Success) {
-          console.log(res.Results);
+          this.openSnackBar('Record updated successfully');
           return of(res.Success);
         } else {
+          this.openSnackBar(
+            res.ErrorMessage ? res.ErrorMessage : 'Record could not be created.'
+          );
           of(res.Success);
         }
       }),
       catchError((error: any) => {
-        console.log(error);
+        this.openSnackBar('Something went wrong, record could not be updated.');
         return of(false);
       })
     );
   }
 
   deleteContact(id: number): Observable<boolean> {
-    return this.apiService.delete(`registration/update/${id}`).pipe(
+    return this.apiService.delete(`registrations/update/${id}`).pipe(
       switchMap((res: IApiResult) => {
         if (res.Success) {
-          console.log(res.Results);
+          this.openSnackBar('Record deleted successfully');
           return of(res.Success);
         } else {
+          this.openSnackBar(
+            res.ErrorMessage ? res.ErrorMessage : 'Record could not be deleted.'
+          );
           of(false);
         }
       }),
       catchError((error: any) => {
-        console.log(error);
+        this.openSnackBar('Something went wrong, record could not be deleted.');
         return of(false);
       })
     );
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'close', {
+      duration: 5000,
+    });
   }
 }
