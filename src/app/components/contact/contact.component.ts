@@ -62,9 +62,9 @@ export class ContactComponent implements OnInit {
       });
   }
 
-  openDialog(data: IContactInfo): void {
+  openDialog(data: IContactInfo, view: boolean): void {
     const dialogRef = this.dialog.open(ContactFormComponent, {
-      data,
+      data: { record: data, view },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -86,15 +86,15 @@ export class ContactComponent implements OnInit {
   }
 
   onAddButtonClick() {
-    this.openDialog(null);
+    this.openDialog(null, false);
   }
 
   onEditIconClick(data: IContactInfo) {
-    this.openDialog(data);
+    this.openDialog(data, false);
   }
 
   onViewIconClick(data: IContactInfo) {
-    console.log(data);
+    this.openDialog(data, true);
   }
 
   onDeleteIconClick(id: number) {

@@ -35,16 +35,16 @@ export class ContactFormComponent {
   ) {
     if (this.data) {
       this.contactForm.patchValue({
-        FirstName: this.data.FirstName,
-        LastName: this.data.LastName,
-        OtherName: this.data.OtherName,
-        DateOfBirth: this.data.DateOfBirth,
-        Gender: this.data.Gender,
-        PhoneNo: this.data.PhoneNo,
-        Occupation: this.data.Occupation,
-        Address: this.data.Address,
-        Nationality: this.data.Nationality,
-        CountryOfResidence: this.data.CountryOfResidence,
+        FirstName: this.data.record?.FirstName,
+        LastName: this.data.record?.LastName,
+        OtherName: this.data.record?.OtherName,
+        DateOfBirth: this.data.record?.DateOfBirth,
+        Gender: this.data.record?.Gender,
+        PhoneNo: this.data.record?.PhoneNo,
+        Occupation: this.data.record?.Occupation,
+        Address: this.data.record?.Address,
+        Nationality: this.data.record?.Nationality,
+        CountryOfResidence: this.data.record?.CountryOfResidence,
       });
     }
   }

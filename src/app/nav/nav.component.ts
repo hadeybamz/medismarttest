@@ -10,7 +10,7 @@ import { LoaderService } from '../shared/services/loader.service';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent {
-  public menuItems = ['contact', 'sales', 'orders', 'customers', 'products'];
+  public menuItems = ['contact'];
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)

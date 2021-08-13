@@ -7,6 +7,7 @@ import { IContactInfo } from 'src/app/components/contact/contact.component';
 import { IApiResult } from 'src/app/interfaces/api-result.interface';
 import { ApiService } from './api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CONTACT_API_URL } from 'src/app/constants/api-urls.constant';
 
 @Injectable()
 export class ContactApiService {
@@ -17,7 +18,7 @@ export class ContactApiService {
   constructor(private apiService: ApiService, private _snackBar: MatSnackBar) {}
 
   getAll(): Observable<any[]> {
-    return this.apiService.read('/contacts/getAll').pipe(
+    return this.apiService.read(CONTACT_API_URL.getAll).pipe(
       switchMap((res: IApiResult) => {
         if (res.Success && res.Results) {
           this.openSnackBar('records loaded successfully');
@@ -37,7 +38,7 @@ export class ContactApiService {
   }
 
   createContact(data: IContactInfo): Observable<boolean> {
-    return this.apiService.create('/contacts/create', data).pipe(
+    return this.apiService.create(CONTACT_API_URL.create, data).pipe(
       switchMap((res: IApiResult) => {
         if (res.Success) {
           this.openSnackBar('Record created successfully');
@@ -57,7 +58,7 @@ export class ContactApiService {
   }
 
   updateContact(data: IContactInfo, id: number): Observable<boolean> {
-    return this.apiService.update(`registrations/update/${id}`, data).pipe(
+    return this.apiService.update(`${CONTACT_API_URL.update}/${id}`, data).pipe(
       switchMap((res: IApiResult) => {
         if (res.Success) {
           this.openSnackBar('Record updated successfully');
@@ -77,7 +78,7 @@ export class ContactApiService {
   }
 
   deleteContact(id: number): Observable<boolean> {
-    return this.apiService.delete(`registrations/update/${id}`).pipe(
+    return this.apiService.delete(`${CONTACT_API_URL.delete}/${id}`).pipe(
       switchMap((res: IApiResult) => {
         if (res.Success) {
           this.openSnackBar('Record deleted successfully');
