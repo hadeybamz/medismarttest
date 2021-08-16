@@ -4,7 +4,7 @@
   },
 
   "data": {
-    "api": "http://localhost:8000/api/v1"
+    "api": "https://localhost:44395"
   },
 
   "appInsights": {

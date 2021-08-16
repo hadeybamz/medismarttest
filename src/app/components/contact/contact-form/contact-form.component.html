@@ -12,11 +12,11 @@
           <input
             matInput
             placeholder="First name"
-            formControlName="FirstName"
+            formControlName="firstName"
             [readonly]="data.view"
           />
           <mat-error
-            *ngIf="contactForm.controls['FirstName'].hasError('required')"
+            *ngIf="contactForm.controls['firstName'].hasError('required')"
           >
             First name is <strong>required</strong>
           </mat-error>
@@ -27,11 +27,11 @@
           <input
             matInput
             placeholder="Last name"
-            formControlName="LastName"
+            formControlName="lastName"
             [readonly]="data.view"
           />
           <mat-error
-            *ngIf="contactForm.controls['LastName'].hasError('required')"
+            *ngIf="contactForm.controls['lastName'].hasError('required')"
           >
             Last name is <strong>required</strong>
           </mat-error>
@@ -44,7 +44,7 @@
           <input
             matInput
             placeholder="Other Names"
-            formControlName="OtherName"
+            formControlName="otherName"
             [readonly]="data.view"
           />
         </mat-form-field>
@@ -55,7 +55,7 @@
           <input
             matInput
             [matDatepicker]="picker"
-            formControlName="DateOfBirth"
+            formControlName="dateOfBirth"
             [readonly]="data.view"
           />
           <mat-datepicker-toggle
@@ -68,7 +68,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <mat-radio-group formControlName="Gender" [disabled]="data.view">
+        <mat-radio-group formControlName="gender" [disabled]="data.view">
           <mat-radio-button value="male">Male</mat-radio-button>
           <mat-radio-button value="female">Female</mat-radio-button>
           <mat-radio-button value="others">Other</mat-radio-button>
@@ -81,7 +81,7 @@
           <textarea
             matInput
             placeholder="Address"
-            formControlName="Address"
+            formControlName="address"
             [readonly]="data.view"
           ></textarea>
         </mat-form-field>
@@ -93,7 +93,7 @@
           <input
             matInput
             placeholder="Nationality"
-            formControlName="Nationality"
+            formControlName="nationality"
             [readonly]="data.view"
           />
         </mat-form-field>
@@ -103,7 +103,7 @@
           <input
             matInput
             placeholder="Country of Residence"
-            formControlName="CountryOfResidence"
+            formControlName="countryOfResidence"
             [readonly]="data.view"
           />
         </mat-form-field>
@@ -116,7 +116,7 @@
             matInput
             maxlength="15"
             placeholder="Phone Number"
-            formControlName="PhoneNo"
+            formControlName="phoneNo"
             [readonly]="data.view"
           />
         </mat-form-field>
@@ -126,7 +126,7 @@
           <input
             matInput
             placeholder="Occupation"
-            formControlName="Occupation"
+            formControlName="occupation"
             [readonly]="data.view"
           />
         </mat-form-field>

@@ -24,6 +24,6 @@ export class InterceptorService implements HttpInterceptor {
         this.loaderService.processing$.next(false);
       })
     );
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 }

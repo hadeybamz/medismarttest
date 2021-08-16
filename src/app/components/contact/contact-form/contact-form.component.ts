@@ -12,19 +12,19 @@ import { ContactApiService } from 'src/app/shared/services/contact-api.service';
 })
 export class ContactFormComponent {
   contactForm = this.fb.group({
-    FirstName: [null, Validators.required],
-    LastName: [null, Validators.required],
-    OtherName: [null],
-    DateOfBirth: [null, Validators.required],
-    Gender: [null, Validators.required],
-    PhoneNo: [
+    firstName: [null, Validators.required],
+    lastName: [null, Validators.required],
+    otherName: [null],
+    dateOfBirth: [null, Validators.required],
+    gender: [null, Validators.required],
+    phoneNo: [
       null,
       Validators.compose([Validators.minLength(11), Validators.maxLength(15)]),
     ],
-    Occupation: [null],
-    Address: [null],
-    Nationality: [null],
-    CountryOfResidence: [null],
+    occupation: [null],
+    address: [null],
+    nationality: [null],
+    countryOfResidence: [null],
   });
 
   constructor(
@@ -35,24 +35,24 @@ export class ContactFormComponent {
   ) {
     if (this.data) {
       this.contactForm.patchValue({
-        FirstName: this.data.record?.FirstName,
-        LastName: this.data.record?.LastName,
-        OtherName: this.data.record?.OtherName,
-        DateOfBirth: this.data.record?.DateOfBirth,
-        Gender: this.data.record?.Gender,
-        PhoneNo: this.data.record?.PhoneNo,
-        Occupation: this.data.record?.Occupation,
-        Address: this.data.record?.Address,
-        Nationality: this.data.record?.Nationality,
-        CountryOfResidence: this.data.record?.CountryOfResidence,
+        firstName: this.data.record ? this.data.record.firstName : null,
+        lastName: this.data.record ? this.data.record.lastName : null,
+        otherName: this.data.record ? this.data.record.otherName : null,
+        dateOfBirth: this.data.record ? this.data.record.dateOfBirth : null,
+        gender: this.data.record ? this.data.record.gender : null,
+        phoneNo: this.data.record ? this.data.record.phoneNo : null,
+        occupation: this.data.record ? this.data.record.occupation : null,
+        address: this.data.record ? this.data.record.address : null,
+        nationality: this.data.record ? this.data.record.nationality : null,
+        countryOfResidence: this.data.record ? this.data.record.countryOfResidence : null,
       });
     }
   }
 
   onSubmit(): void {
-    if (this.data) {
+    if (this.data && this.data.record) {
       this.apiService
-        .updateContact(this.contactForm.getRawValue(), this.data.Id)
+        .updateContact(this.contactForm.getRawValue(), this.data.record.id)
         .pipe(take(1))
         .subscribe((res) => {
           if (res) {

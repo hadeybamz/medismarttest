@@ -7,7 +7,7 @@ export const environment = {
   appName: 'Contact-App',
   appShortName: 'CAPP',
   version: '1.0.0',
-  baseUrl: 'https://baseUrl.com',
+  baseUrl: 'https://localhost:44395',
 };
 
 /*

@@ -10,16 +10,16 @@ import { ContactApiService } from 'src/app/shared/services/contact-api.service';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 
 export interface IContactInfo {
-  FirstName: string;
-  LastName: string;
-  OtherName: string;
-  DateOfBirth: string;
-  Gender: string;
-  PhoneNo: string;
-  Occupation: string;
-  Address: string;
-  Nationality: string;
-  CountryOfResidence: string;
+  firstName: string;
+  lastName: string;
+  otherName: string;
+  dateOfBirth: string;
+  gender: string;
+  phoneNo: string;
+  occupation: string;
+  address: string;
+  nationality: string;
+  countryOfResidence: string;
 }
 
 @Component({
@@ -31,12 +31,12 @@ export interface IContactInfo {
 export class ContactComponent implements OnInit {
   contacts$: Observable<IContactInfo[]>;
   displayedColumns: string[] = [
-    'Id',
-    'FirstName',
-    'LastName',
-    'DateOfBirth',
-    'PhoneNo',
-    'Occupation',
+    'id',
+    'firstName',
+    'lastName',
+    'dateOfBirth',
+    'phoneNo',
+    'occupation',
     'Actions',
   ];
 

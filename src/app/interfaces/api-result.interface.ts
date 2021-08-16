@@ -1,5 +1,5 @@
 export interface IApiResult {
-  Success: boolean;
-  Results: Array<any>;
-  ErrorMessage: string;
+  success: boolean;
+  results: Array<any>;
+  errorMessage: string;
 }

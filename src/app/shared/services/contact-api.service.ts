@@ -20,12 +20,12 @@ export class ContactApiService {
   getAll(): Observable<any[]> {
     return this.apiService.read(CONTACT_API_URL.getAll).pipe(
       switchMap((res: IApiResult) => {
-        if (res.Success && res.Results) {
+        if (res.success && res.results) {
           this.openSnackBar('records loaded successfully');
-          return of(res.Results);
+          return of(res.results);
         } else {
           this.openSnackBar(
-            res.ErrorMessage ? res.ErrorMessage : 'Data could not be loaded.'
+            res.errorMessage ? res.errorMessage : 'Data could not be loaded.'
           );
           return of([]);
         }
@@ -40,14 +40,14 @@ export class ContactApiService {
   createContact(data: IContactInfo): Observable<boolean> {
     return this.apiService.create(CONTACT_API_URL.create, data).pipe(
       switchMap((res: IApiResult) => {
-        if (res.Success) {
+        if (res.success) {
           this.openSnackBar('Record created successfully');
-          return of(res.Success);
+          return of(res.success);
         } else {
           this.openSnackBar(
-            res.ErrorMessage ? res.ErrorMessage : 'Record could not be created'
+            res.errorMessage ? res.errorMessage : 'Record could not be created'
           );
-          of(res.Success);
+          of(res.success);
         }
       }),
       catchError((error: any) => {
@@ -60,14 +60,14 @@ export class ContactApiService {
   updateContact(data: IContactInfo, id: number): Observable<boolean> {
     return this.apiService.update(`${CONTACT_API_URL.update}/${id}`, data).pipe(
       switchMap((res: IApiResult) => {
-        if (res.Success) {
+        if (res.success) {
           this.openSnackBar('Record updated successfully');
-          return of(res.Success);
+          return of(res.success);
         } else {
           this.openSnackBar(
-            res.ErrorMessage ? res.ErrorMessage : 'Record could not be created.'
+            res.errorMessage ? res.errorMessage : 'Record could not be created.'
           );
-          of(res.Success);
+          of(res.success);
         }
       }),
       catchError((error: any) => {
@@ -80,12 +80,12 @@ export class ContactApiService {
   deleteContact(id: number): Observable<boolean> {
     return this.apiService.delete(`${CONTACT_API_URL.delete}/${id}`).pipe(
       switchMap((res: IApiResult) => {
-        if (res.Success) {
+        if (res.success) {
           this.openSnackBar('Record deleted successfully');
-          return of(res.Success);
+          return of(res.success);
         } else {
           this.openSnackBar(
-            res.ErrorMessage ? res.ErrorMessage : 'Record could not be deleted.'
+            res.errorMessage ? res.errorMessage : 'Record could not be deleted.'
           );
           of(false);
         }
